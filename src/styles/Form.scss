@@ -33,4 +33,70 @@
     height: 3rem;
     stroke: $title-color;
   }
+
+  &__form{
+    display: flex;
+    width: calc(100% - 1.2rem * 2);
+    padding: 1.2rem;
+    box-shadow: 0px 0px 21px -7px rgba(0,0,0,0.14);
+    -webkit-box-shadow: 0px 0px 21px -7px rgba(0,0,0,0.14);
+    -moz-box-shadow: 0px 0px 21px -7px rgba(0,0,0,0.14);
+    margin-bottom: 1.5rem;
+
+    &__inputs{
+      display: flex;
+      flex-direction: column;
+      width: 70%;
+
+      & input{
+        height: 1.5rem;
+        border: 0;
+        outline: none;
+        padding: .5rem 1rem;
+        border-radius: .5rem;
+        margin: .2rem 0;
+      }
+    }
+
+    &__buttons{
+      display: flex;
+      position: relative;
+      align-items: center;
+
+      & input{
+        /*position: absolute;
+        opacity: 0;
+        z-index: 1;*/
+      }
+
+      & button{
+        cursor: pointer;
+        border: 0;
+        background-color: $title-color;
+        color: white;
+        border-radius: .5rem;
+        width: 5rem;
+        height: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 5px 21px -10px $title-color;
+        -webkit-box-shadow: 0px 5px 21px -10px $title-color;
+        -moz-box-shadow: 0px 5px 21px -10px $title-color;
+      }
+    }
+  }
+}
+
+#calendar-svg{
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  z-index: 2;
+  pointer-events: none;
 }
