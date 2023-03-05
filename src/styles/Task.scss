@@ -1,0 +1,28 @@
+@import './Variables.scss';
+.task{
+    display: flex;
+    width: calc(100% - 1rem * 2);
+    align-items: center;
+    justify-content: space-between;
+    padding: .2rem 1rem;
+
+    &__check{
+        cursor: pointer;
+    }
+
+    &__title{
+        font-weight: 400!important;
+        margin: 0;
+    }
+
+    &__date{
+        margin: 0;
+        color: $date-color;
+    }
+
+    &__svg{
+        cursor: pointer;
+        width: $icon-size;
+        height: $icon-size;
+    }
+}
