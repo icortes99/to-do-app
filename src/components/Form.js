@@ -1,6 +1,7 @@
 import '../styles/Form.scss'
 import Task from '../components/Task.js'
 import {ReactComponent as List} from '../svg_icons/svg_list.svg'
+import {ReactComponent as Calendar} from '../svg_icons/svg_calendar.svg'
 import {useState} from 'react'
 
 function Form(){
@@ -22,7 +23,7 @@ function Form(){
         completed: false,
         active: true
     }])
-    //const [accordion, setAccordion] = useState(0) //state para manejar cual Task tiene la info desplegada
+    const [editMode, setEditMode] = useState('')
     const handleSubmit = (event)=>{
         event.preventDefault()
         const taskTitle = event.target.elements.taskTitle.value
@@ -41,15 +42,20 @@ function Form(){
         event.target.reset()
     }
     const deleteTask = (idTask)=>{
-        console.log('idtask' + idTask)
-        let newTasks = tasks
-        const index = newTasks.findIndex(obj => obj.id === idTask)
-        let temp = newTasks[index]
-        temp.active = false
-        //newTasks.splice(index, 1)
-        newTasks[index] = temp
-        console.log('new tasks' + JSON.stringify(newTasks))
-        setTasks(newTasks)
+        setTasks((prevTasks)=>{
+            const tasksUpdated = prevTasks.slice()
+            const index = tasksUpdated.findIndex(obj => obj.id === idTask)
+            tasksUpdated[index] = {...tasksUpdated[index], active : false}
+            return tasksUpdated
+        })
+    }
+    const editTask = (taskModified)=>{
+        setTasks((prevTasks)=>{
+            const tasksUpdated = prevTasks.slice()
+            const index = tasksUpdated.findIndex(obj => obj.id === taskModified.id)
+            tasksUpdated[index] = taskModified
+            return tasksUpdated
+        })
     }
 
     return(
@@ -67,14 +73,22 @@ function Form(){
                     <div className={`${block}__form__buttons`}>
                         <label htmlFor='due_date'></label>
                         <input id='due_date' type='date' className={`${block}__calendar-input`}/>
-                        <button type='submit'>ADD</button>
+                        <button className={`${block}__form__buttons--calendar`} type='button'>
+                            <Calendar id='calendar-svg'/>
+                        </button>
+                        <button className={`${block}__form__buttons--add`} type='submit'aria-label='Calendar'>ADD</button>
                     </div>
                 </form>
+                <div className={`${block}__br`}/> 
                 {tasks.map((i, j)=>
+                    i.active &&
                     <Task
                     key={j}
                     task={i}
-                    deleteF={deleteTask}/>
+                    deleteF={deleteTask}
+                    editF={editTask}
+                    editionMode={editMode}
+                    setEditionMode={setEditMode}/>
                 )}
             </div>
         </div>

@@ -4,6 +4,7 @@
   max-width: 100%;
   padding: 1rem;
   min-width: 30rem;
+  max-width: 30rem;
   min-height: 20rem;
   border-radius: .5rem;
   border: .1rem solid $border-color;
@@ -11,7 +12,7 @@
   &__workspace{
     border-radius: .5rem;
     background-color: $background-color;
-    padding: 1rem;
+    padding: 1rem 1.2rem;
     box-shadow: 3px 4px 13px -3px $background-color;
     -webkit-box-shadow: 3px 4px 13px -3px $background-color;
     -moz-box-shadow: 3px 4px 13px -3px $background-color;
@@ -64,12 +65,12 @@
       align-items: center;
 
       & input{
-        /*position: absolute;
-        opacity: 0;
-        z-index: 1;*/
+        position: absolute;
+        top: -999rem;
+        left: -999rem;
       }
 
-      & button{
+      &--add{
         cursor: pointer;
         border: 0;
         background-color: $title-color;
@@ -84,19 +85,31 @@
         -webkit-box-shadow: 0px 5px 21px -10px $title-color;
         -moz-box-shadow: 0px 5px 21px -10px $title-color;
       }
+
+      &--calendar{
+        //position: absolute;
+        background: none;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        margin: 0 .2rem;
+      }
     }
+  }
+
+  &__br{
+    background-color: $date-color;
+    height: .05rem;
+    margin: 2rem 0 1.2rem;
+    opacity: .2;
+    width: 100%;
   }
 }
 
 #calendar-svg{
   width: 2rem;
   height: 2rem;
-  position: relative;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
-  margin: auto;
-  z-index: 2;
   pointer-events: none;
 }
