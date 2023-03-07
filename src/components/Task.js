@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 function Task(props){
     const block = 'task'
-    const {task, deleteF, editF, editionMode, setEditionMode} = props
+    const {task, editTask, deleteF, editF, editionMode, setEditionMode} = props
     let [editInfo, setEditInfo] = useState({
         id: task.id,
         title: '**********',
@@ -17,22 +17,18 @@ function Task(props){
     })
     //onClick={()=>editF(editInfo)} //esto es para editar, va en el boton Ok
     const handleEvent = (event)=>{
-        setEditInfo({
-            id: task.id,
-            title: '**********',
-            description: '**********',
-            due_date: '*********',
-            created: task.created,
-            completed: task.completed,
-            active: task.active
-        })
+        const {name, value} = event.target
+        setEditInfo('')
     }
     const turnOffEditMode = (option)=>{
         if(option === 'edit'){
-            //actualizar el objeto y desactivar el editMode
-        } else {
-            setEditionMode('')
+            editTask((previousArr) =>{
+                previousArr.map((item)=>{
+                    item.id = task.id ? {...item, editInfo} : item
+                })
+            })
         }
+        setEditionMode('')
     }
 
     return(
@@ -54,12 +50,12 @@ function Task(props){
 
             { editionMode === task.id && <div className={`${block}__edition`}>
                 <div className={`${block}__edition--inputs`}>
-                    <input name='taskTitle' defaultValue={task.title} onChange={()=>handleEvent}/>
-                    <input name='taskDescription' defaultValue={task.description} onChange={()=>handleEvent}/>
+                    <input name='title' defaultValue={task.title} onChange={(e)=>handleEvent(e)}/>
+                    <input name='description' defaultValue={task.description} onChange={(e)=>handleEvent(e)}/>
                 </div>
 
                 <div className={`${block}__edition--btns`}>
-                    <button onClick={()=>turnOffEditMode('edit')}>Change</button>
+                    <button onClick={()=>turnOffEditMode('edit')}>Save</button>
                     <button onClick={()=>turnOffEditMode('cancel')}>Cancel</button>
                 </div>
             </div>}
