@@ -1,32 +1,32 @@
 import '../styles/Task.scss'
 import {ReactComponent as Edit} from '../svg_icons/svg_edit.svg'
 import {ReactComponent as Delete} from '../svg_icons/svg_delete.svg'
+import {TodayFormat} from './DateFormat'
 import { useState } from 'react'
 
 function Task(props){
     const block = 'task'
-    const {task, editTask, deleteF, editF, editionMode, setEditionMode} = props
+    const {task, deleteF, editF, editionMode, setEditionMode} = props
     let [editInfo, setEditInfo] = useState({
         id: task.id,
-        title: '**********',
-        description: '**********',
-        due_date: '*********',
-        created: task.created,
+        title: task.id,
+        description: task.description,
+        due_date: task.due_date,
+        created: TodayFormat(),
         completed: task.completed,
         active: task.active
     })
-    //onClick={()=>editF(editInfo)} //esto es para editar, va en el boton Ok
     const handleEvent = (event)=>{
         const {name, value} = event.target
-        setEditInfo('')
-    }
-    const turnOffEditMode = (option)=>{
+        setEditInfo({
+            ...editInfo,
+            [name]: value
+        })
+    } 
+    const turnOffEditMode = (option, event)=>{
+        event.preventDefault()
         if(option === 'edit'){
-            editTask((previousArr) =>{
-                previousArr.map((item)=>{
-                    item.id = task.id ? {...item, editInfo} : item
-                })
-            })
+            editF(editInfo)
         }
         setEditionMode('')
     }
@@ -55,8 +55,8 @@ function Task(props){
                 </div>
 
                 <div className={`${block}__edition--btns`}>
-                    <button onClick={()=>turnOffEditMode('edit')}>Save</button>
-                    <button onClick={()=>turnOffEditMode('cancel')}>Cancel</button>
+                    <button onClick={(e)=>turnOffEditMode('edit', e)}>Save</button>
+                    <button onClick={(e)=>turnOffEditMode('cancel', e)}>Cancel</button>
                 </div>
             </div>}
         </div>

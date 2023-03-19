@@ -85,7 +85,6 @@ function Form(){
                     <Task
                     key={j}
                     task={i}
-                    editTask={setTasks}
                     deleteF={deleteTask}
                     editF={editTask}
                     editionMode={editMode}
