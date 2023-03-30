@@ -1,6 +1,8 @@
 import '../styles/Task.scss'
 import {ReactComponent as Edit} from '../svg_icons/svg_edit.svg'
 import {ReactComponent as Delete} from '../svg_icons/svg_delete.svg'
+import {ReactComponent as Ok} from '../svg_icons/svg_ok.svg'
+import {ReactComponent as Cancel} from '../svg_icons/svg_cancel.svg'
 import {TodayFormat} from './DateFormat'
 import { useState } from 'react'
 
@@ -55,8 +57,8 @@ function Task(props){
                 </div>
 
                 <div className={`${block}__edition--btns`}>
-                    <button onClick={(e)=>turnOffEditMode('edit', e)}>Save</button>
-                    <button onClick={(e)=>turnOffEditMode('cancel', e)}>Cancel</button>
+                    <Ok onClick={(e)=>turnOffEditMode('edit', e)}/>
+                    <Cancel onClick={(e)=>turnOffEditMode('cancel', e)}/>
                 </div>
             </div>}
         </div>
