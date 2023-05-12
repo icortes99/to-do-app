@@ -50,17 +50,21 @@ function Task(props){
                 <p className={`${block}__description__text`}>{task.description}</p>
             </div>
 
-            { editionMode === task.id && <div className={`${block}__edition`}>
+            { editionMode === task.id && <form onSubmit={(e)=>turnOffEditMode('edit', e)} className={`${block}__edition`}>
                 <div className={`${block}__edition--inputs`}>
                     <input name='title' defaultValue={task.title} onChange={(e)=>handleEvent(e)}/>
-                    <input name='description' defaultValue={task.description} onChange={(e)=>handleEvent(e)}/>
+                    <input id='description-input-edit' name='description' defaultValue={task.description} onChange={(e)=>handleEvent(e)}/>
                 </div>
 
                 <div className={`${block}__edition--btns`}>
-                    <Ok onClick={(e)=>turnOffEditMode('edit', e)}/>
-                    <Cancel onClick={(e)=>turnOffEditMode('cancel', e)}/>
+                    <button type='submit'>
+                        <Ok/>
+                    </button>
+                    <button type='button'>
+                        <Cancel type='button' onClick={(e)=>turnOffEditMode('cancel', e)}/>
+                    </button>
                 </div>
-            </div>}
+            </form>}
         </div>
     )
 }

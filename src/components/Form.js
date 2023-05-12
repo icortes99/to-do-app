@@ -2,7 +2,8 @@ import '../styles/Form.scss'
 import Task from '../components/Task.js'
 import {ReactComponent as List} from '../svg_icons/svg_list.svg'
 import {ReactComponent as Calendar} from '../svg_icons/svg_calendar.svg'
-import {useState} from 'react'
+import {useRef, useState} from 'react'
+import Swal from 'sweetalert2'
 
 function Form(){
     const block = 'form'
@@ -24,6 +25,8 @@ function Form(){
         active: true
     }])
     const [editMode, setEditMode] = useState('')
+    const dateInputRef = useRef(null)
+
     const handleSubmit = (event)=>{
         event.preventDefault()
         const taskTitle = event.target.elements.taskTitle.value
@@ -38,8 +41,12 @@ function Form(){
             completed: false,
             active: true
         }
-        setTasks([...tasks, newTask])
-        event.target.reset()
+        if (newTask.title && newTask.description){
+            setTasks([...tasks, newTask])
+            event.target.reset()
+        } else {
+            Swal.fire('Information required', 'Please check all inputs before submitting your new task', 'error')
+        }
     }
     const deleteTask = (idTask)=>{
         setTasks((prevTasks)=>{
@@ -57,6 +64,13 @@ function Form(){
             return tasksUpdated
         })
     }
+    const handleCalendar = (e)=>{
+        //abrir el input del calendario
+        //guardar el valor en el objeto newTask
+        e.preventDefault()
+        //dateInputRef.current.focus()
+        console.log('open calendar')
+    }
 
     return(
         <div className={`${block}`}>
@@ -72,11 +86,11 @@ function Form(){
                     </div>
                     <div className={`${block}__form__buttons`}>
                         <label htmlFor='due_date'></label>
-                        <input id='due_date' type='date' className={`${block}__calendar-input`}/>
-                        <button className={`${block}__form__buttons--calendar`} type='button'>
+                        <input id='due_date' type='date' className={`${block}__calendar-input`} ref={dateInputRef}/>
+                        <button onClick={handleCalendar} className={`${block}__form__buttons--calendar`} type='button'>
                             <Calendar id='calendar-svg'/>
                         </button>
-                        <button className={`${block}__form__buttons--add`} type='submit'aria-label='Calendar'>ADD</button>
+                        <button className={`${block}__form__buttons--add`} type='submit' aria-label='Calendar'>ADD</button>
                     </div>
                 </form>
                 <div className={`${block}__br`}/> 
