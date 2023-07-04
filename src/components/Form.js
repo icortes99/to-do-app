@@ -69,11 +69,7 @@ function Form(){
         })
     }
     const handleCalendar = (e)=>{
-        //abrir el input del calendario
-        //guardar el valor en el objeto newTask
         e.preventDefault()
-        //dateInputRef.current.focus()
-        console.log('open calendar')
         setCalendar(!calendar)
     }
 

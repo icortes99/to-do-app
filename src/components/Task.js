@@ -92,7 +92,6 @@ function Task(props){
             ...prev,
             ask: !ask
         }))
-        console.log('ask: ', ask)
     }, [ask, setAskAgain])
 
     return(
@@ -105,7 +104,7 @@ function Task(props){
                         <Edit className={`${block}__svg`} onClick={()=>setEditionMode(task.id)}/>
                         <Delete className={`${block}__svg`} onClick={()=>deleteF(task.id)}/>
                     </div>
-                    <p className={`${block}__date`}>{task.created}</p>
+                    <p className={`${block}__date`}>{task.due_date}</p>
                 </div>
             </div>
             <div className={`${block}__description`}>
