@@ -1,0 +1,59 @@
+@import './Variables.scss';
+.calendar {
+    position: absolute;
+    z-index: 9999;
+    right: 3rem;
+    top: 4.5rem;
+    background-color: #ffffff;
+    border-radius: .5rem;
+    padding: 1rem;
+    color: #000;
+    display: flex;
+    flex-grow: 1;
+    width: 16.6rem;
+    height: 29rem;
+    box-shadow: 3px 4px 13px -3px $date-color;
+    -webkit-box-shadow: 3px 4px 13px -3px $date-color;
+    -moz-box-shadow: 3px 4px 13px -3px $date-color;
+}
+
+.fc-daygrid-day {
+    font-size: 1rem;
+}
+
+.fc-toolbar-title{
+    font-size: 1.3rem!important;
+    width: 10rem;
+    margin-left: .2rem;
+}
+
+.fc-today-button{
+    display: none!important;
+}
+
+.fc-header-toolbar{
+    margin-bottom: 1rem!important;
+}
+
+.fc th{
+    text-align: center!important;
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+    padding-top: .1rem!important;
+    padding-bottom: .1rem!important;
+    background-color: $background-color;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+
+    & a {
+        padding: 0px!important;
+        padding-top: .1rem;
+        width: 100%;
+        text-align: center!important;
+        font-weight: 200!important;
+    }
+}
+
+.fc-scrollgrid {
+    border-radius: .5rem;
+}

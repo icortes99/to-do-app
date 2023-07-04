@@ -1,6 +1,6 @@
 @import './Variables.scss';
 .form {
-    background-color: white;
+  background-color: white;
   max-width: 100%;
   padding: 1rem;
   min-width: 30rem;
@@ -62,6 +62,7 @@
     &__buttons{
       display: flex;
       position: relative;
+      
       align-items: center;
 
       & input{
@@ -88,6 +89,7 @@
 
       &--calendar{
         //position: absolute;
+        //position: relative;
         background: none;
         border: none;
         cursor: pointer;
@@ -104,6 +106,20 @@
     opacity: .2;
     width: 100%;
   }
+
+  &__notasks{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & p {
+      color: #7c7c7c;
+      margin: 0;
+      margin-left: .5rem;
+    }
+  }
 }
 
 #calendar-svg{
@@ -112,4 +128,9 @@
   top: 0;
   left: 0;
   pointer-events: none;
+}
+
+#info-svg{
+  width: 1.5rem;
+  height: 1.5rem;
 }

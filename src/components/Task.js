@@ -4,11 +4,13 @@ import {ReactComponent as Delete} from '../svg_icons/svg_delete.svg'
 import {ReactComponent as Ok} from '../svg_icons/svg_ok.svg'
 import {ReactComponent as Cancel} from '../svg_icons/svg_cancel.svg'
 import {TodayFormat} from './DateFormat'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
+import ReactDOMServer from 'react-dom/server'
 
 function Task(props){
     const block = 'task'
-    const {task, deleteF, editF, editionMode, setEditionMode} = props
+    const {task, deleteF, editF, editionMode, setEditionMode, askAgain, setAskAgain} = props
     let [editInfo, setEditInfo] = useState({
         id: task.id,
         title: task.id,
@@ -18,13 +20,14 @@ function Task(props){
         completed: task.completed,
         active: task.active
     })
+    const [ask, setAsk] = useState(false)
     const handleEvent = (event)=>{
         const {name, value} = event.target
         setEditInfo({
             ...editInfo,
             [name]: value
         })
-    } 
+    }
     const turnOffEditMode = (option, event)=>{
         event.preventDefault()
         if(option === 'edit'){
@@ -32,11 +35,70 @@ function Task(props){
         }
         setEditionMode('')
     }
+    const handleCheck =()=>{
+        if(askAgain.ask){
+            Swal.fire({
+                icon: 'info',
+                text: 'Do you want to delete this task from the displayed list?',
+                html: ReactDOMServer.renderToString(<div>
+                    <p>Do you want to delete this task from the displayed list?</p>
+                    <label htmlFor='doNotCheckbox'>Do not ask again</label>
+                    <input 
+                    id='doNotCheckbox'
+                    type='checkbox'
+                    defaultChecked={ask}
+                    ref={(input) => {
+                        if (input) {
+                            input.indeterminate = false;
+                            input.checked = ask;
+                        }
+                    }}/>
+                </div>),
+                showCancelButton: true,
+                cancelButtonText: 'Do not delete',
+                showConfirmButton: true,
+                confirmButtonText: 'Delete taks',
+                didOpen: () => {
+                    const checkbox = document.getElementById('doNotCheckbox');
+                    if (checkbox) {
+                      checkbox.addEventListener('change', () => {
+                        setAsk(checkbox.checked)
+                      })
+                    }
+                  }
+            }).then((result) => {
+                if (result.isConfirmed){
+                    setAskAgain((prev) =>({
+                        ...prev,
+                        answer: true
+                    }))
+                    deleteF(task.id)
+                } else {
+                    setAskAgain((prev) =>({
+                        ...prev,
+                        answer: false
+                    }))
+                }
+            })
+        }
+
+        if (!askAgain.ask && askAgain.answer){
+            deleteF(task.id)
+        }
+    }
+
+    useEffect(()=>{
+        setAskAgain((prev) =>({
+            ...prev,
+            ask: !ask
+        }))
+        console.log('ask: ', ask)
+    }, [ask, setAskAgain])
 
     return(
         <div className={`${block}__parent`}>
             <div className={`${block}`}>
-                <input className={`${block}__check`} type='checkbox' defaultChecked={task.completed}/>
+                <input className={`${block}__check`} type='checkbox' defaultChecked={task.completed} onClick={handleCheck}/>
                 <p className={`${block}__title`}>{task.title}</p>
                 <div className={`${block}__father`}>
                     <div className={`${block}__child`}>

@@ -2,8 +2,11 @@ import '../styles/Form.scss'
 import Task from '../components/Task.js'
 import {ReactComponent as List} from '../svg_icons/svg_list.svg'
 import {ReactComponent as Calendar} from '../svg_icons/svg_calendar.svg'
-import {useRef, useState} from 'react'
+import {ReactComponent as Info} from '../svg_icons/svg_info.svg'
+import {useState} from 'react'
 import Swal from 'sweetalert2'
+import CalendarPopUp from './Calendar'
+import { TodayFormat } from './DateFormat'
 
 function Form(){
     const block = 'form'
@@ -13,7 +16,7 @@ function Form(){
         description: 'Groceries: apples, watermelon, orange',
         due_date: '2/2/22',
         created: '2/2/22',
-        completed: true,
+        completed: false,
         active: true
     }, {
         id: 'fd50c99ebac6d',
@@ -25,18 +28,19 @@ function Form(){
         active: true
     }])
     const [editMode, setEditMode] = useState('')
-    const dateInputRef = useRef(null)
+    const [askAgain, setAskAgain] = useState({ask: true, answer: true})
+    const [calendar, setCalendar] = useState(false)
+    const [dueDate, setDueDate] = useState(TodayFormat())
 
     const handleSubmit = (event)=>{
         event.preventDefault()
         const taskTitle = event.target.elements.taskTitle.value
         const taskDescription = event.target.elements.taskDescription.value
-        const taskDueDate = '3/3/03'//event.target.elements.taskDueDate.value
         const newTask = {
             id: Math.random().toString(16).slice(2),
             title: taskTitle,
             description: taskDescription,
-            due_date: taskDueDate,
+            due_date: dueDate,
             created: new Date().toLocaleDateString('es-ES').replace(/\//g, '/').slice(0, -2),
             completed: false,
             active: true
@@ -70,6 +74,7 @@ function Form(){
         e.preventDefault()
         //dateInputRef.current.focus()
         console.log('open calendar')
+        setCalendar(!calendar)
     }
 
     return(
@@ -86,15 +91,16 @@ function Form(){
                     </div>
                     <div className={`${block}__form__buttons`}>
                         <label htmlFor='due_date'></label>
-                        <input id='due_date' type='date' className={`${block}__calendar-input`} ref={dateInputRef}/>
+                        <input id='due_date' type='date' className={`${block}__calendar-input`}/>
                         <button onClick={handleCalendar} className={`${block}__form__buttons--calendar`} type='button'>
                             <Calendar id='calendar-svg'/>
                         </button>
+                        {calendar && <CalendarPopUp show={calendar} setShow={setCalendar} due={dueDate} setDue={setDueDate}/>}
                         <button className={`${block}__form__buttons--add`} type='submit' aria-label='Calendar'>ADD</button>
                     </div>
                 </form>
                 <div className={`${block}__br`}/> 
-                {tasks.map((i, j)=>
+                {tasks.some(x => x.active === true) ? tasks.map((i, j)=>
                     i.active &&
                     <Task
                     key={j}
@@ -102,8 +108,13 @@ function Form(){
                     deleteF={deleteTask}
                     editF={editTask}
                     editionMode={editMode}
-                    setEditionMode={setEditMode}/>
-                )}
+                    setEditionMode={setEditMode}
+                    askAgain={askAgain}
+                    setAskAgain={setAskAgain}/>
+                ) : <div className={`${block}__notasks`}>
+                        <Info id='info-svg' />
+                        <p>No tasks yet</p>
+                    </div>}
             </div>
         </div>
     )
