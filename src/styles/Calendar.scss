@@ -3,7 +3,7 @@
 .calendar {
     position: absolute;
     z-index: 9999;
-    right: 3rem;
+    right: 1rem;
     top: 4.5rem;
     background: $background-gradient;
     border-radius: .5rem;
@@ -12,8 +12,12 @@
     display: flex;
     flex-grow: 1;
     width: 15.5rem;
-    height: 19rem;
+    height: 18.3rem;
     box-shadow: 3px 4px 13px -3px $date-color;
     -webkit-box-shadow: 3px 4px 13px -3px $date-color;
     -moz-box-shadow: 3px 4px 13px -3px $date-color;
+}
+
+.rc-calendar-input-wrap{
+    display: none;
 }

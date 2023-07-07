@@ -3,7 +3,7 @@ import Task from '../components/Task.js'
 import {ReactComponent as List} from '../svg_icons/svg_list.svg'
 import {ReactComponent as Calendar} from '../svg_icons/svg_calendar.svg'
 import {ReactComponent as Info} from '../svg_icons/svg_info.svg'
-import {useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import Swal from 'sweetalert2'
 import CalendarPopUp from './Calendar'
 import { TodayFormat } from './DateFormat'
@@ -72,13 +72,31 @@ function Form(){
         e.preventDefault()
         setCalendar(!calendar)
     }
+    const ref = useRef(false)
+
+    useEffect(()=>{
+        const old_data = localStorage.getItem('data')
+
+        if (old_data) {
+            setTasks(JSON.parse(old_data))
+        } else
+            localStorage.setItem('data', JSON.stringify(tasks))
+    }, [])
+
+    useEffect(()=>{
+        if (ref.current)
+            localStorage.setItem('data', JSON.stringify(tasks))
+        else
+            ref.current = true
+    
+    }, [tasks])
 
     return(
         <div className={`${block}`}>
             <div className={`${block}__workspace`}>
                 <div className={`${block}__workspace__title`}>
                     <List className={`${block}__list-icon`}/>
-                    <h1>My Todo-s</h1>
+                    <h1>My To-do's</h1>
                 </div>
                 <form onSubmit={handleSubmit} className={`${block}__form`}>
                     <div className={`${block}__form__inputs`}>

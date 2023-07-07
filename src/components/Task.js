@@ -7,19 +7,21 @@ import {TodayFormat} from './DateFormat'
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import ReactDOMServer from 'react-dom/server'
+import CalendarPopUp from './Calendar'
 
 function Task(props){
     const block = 'task'
     const {task, deleteF, editF, editionMode, setEditionMode, askAgain, setAskAgain} = props
     let [editInfo, setEditInfo] = useState({
         id: task.id,
-        title: task.id,
+        title: task.title,
         description: task.description,
         due_date: task.due_date,
         created: TodayFormat(),
         completed: task.completed,
         active: task.active
     })
+    const [calendar, setCalendar] = useState(false)
     const [ask, setAsk] = useState(false)
     const handleEvent = (event)=>{
         const {name, value} = event.target
@@ -32,11 +34,16 @@ function Task(props){
         event.preventDefault()
         if(option === 'edit'){
             editF(editInfo)
+        } else {
+            setEditInfo((prev)=>({
+                ...prev,
+                due_date: task.due_date
+            }))
         }
         setEditionMode('')
     }
     const handleCheck =()=>{
-        if(askAgain.ask){
+        if(askAgain.ask && (!task.completed)){
             Swal.fire({
                 icon: 'info',
                 text: 'Do you want to delete this task from the displayed list?',
@@ -86,6 +93,16 @@ function Task(props){
             deleteF(task.id)
         }
     }
+    const handleDueDate = (new_date)=>{
+        setEditInfo((prev)=>({
+            ...prev,
+            due_date: new_date
+        }))
+    }
+    const handleClickCalendar = (e)=>{
+        e.preventDefault()
+        setCalendar(!calendar)
+    }
 
     useEffect(()=>{
         setAskAgain((prev) =>({
@@ -118,12 +135,20 @@ function Task(props){
                 </div>
 
                 <div className={`${block}__edition--btns`}>
-                    <button type='submit'>
-                        <Ok/>
-                    </button>
-                    <button type='button'>
-                        <Cancel type='button' onClick={(e)=>turnOffEditMode('cancel', e)}/>
-                    </button>
+                    <div className={`${block}__edition--btns-date`}>
+                        <button type='button' onClick={handleClickCalendar}>
+                            {editInfo.due_date}
+                        </button>
+                        { calendar && <CalendarPopUp setShow={setCalendar} setDue={handleDueDate}/> }
+                    </div>
+                    <div className={`${block}__edition--btns-ok-cancel`}>
+                        <button type='submit'>
+                            <Ok/>
+                        </button>
+                        <button type='button'>
+                            <Cancel type='button' onClick={(e)=>turnOffEditMode('cancel', e)}/>
+                        </button>
+                    </div>
                 </div>
             </form>}
         </div>

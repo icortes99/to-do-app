@@ -100,6 +100,8 @@
                 border: 0;
                 //border-bottom: solid 1px black;
                 height: 1.5rem;
+                min-height: 1.5rem;
+                max-height: 1.5rem;
                 margin-bottom: .5rem;
                 font-size: 1rem;
                 font-weight: 400 !important;
@@ -112,32 +114,57 @@
             #description-input-edit{
                 font-size: .9rem;
                 border: 0;
-                margin-top: .05rem;
+                margin-top: .07rem;
+                //margin-top: .05rem;
                 margin-left: .11rem;
                 //border-bottom: solid 1px black;
             }
         }
 
         &--btns{
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-end;
             width: 23%;
             padding-right: .4rem;
 
-            & > * {
-                width: 1.3rem;
-                height: 1.3rem;
-                margin: 0 .2rem;
-                padding: 0;
-                cursor: pointer;
-                border: 0;
-                background: rgba($color: #000000, $alpha: 0);
+            &-date{
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-end;
+                width: 100%;
+                padding-top: 1.15rem;
+                position: relative;
 
                 & > * {
+                    background-color: white;
+                    border: 0;
+                    font-size: 1rem;
+                    margin-top: .09rem;
+                    margin-bottom: .1rem;
+                    padding-right: .3rem;
+                    padding-left: .3rem;
+                    border-radius: .5rem;
+                    cursor: pointer;
+                }
+            }
+
+            &-ok-cancel{
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-end;
+
+                & > * { //edit y cancel
                     width: 1.3rem;
                     height: 1.3rem;
-                    //margin: 0 .2rem;
+                    margin: 0 .2rem;
+                    padding: 0;
+                    cursor: pointer;
+                    border: 0;
+                    background: rgba($color: #000000, $alpha: 0);
+
+                    & > * { //svgs
+                        width: 1.3rem;
+                        height: 1.3rem;
+                        //margin: 0 .2rem;
+                    }
                 }
             }
         }
