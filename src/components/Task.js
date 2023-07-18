@@ -130,8 +130,8 @@ function Task(props){
 
             { editionMode === task.id && <form onSubmit={(e)=>turnOffEditMode('edit', e)} className={`${block}__edition`}>
                 <div className={`${block}__edition--inputs`}>
-                    <input name='title' defaultValue={task.title} onChange={(e)=>handleEvent(e)}/>
-                    <input id='description-input-edit' name='description' defaultValue={task.description} onChange={(e)=>handleEvent(e)}/>
+                    <textarea name='title' defaultValue={task.title} onChange={(e)=>handleEvent(e)}></textarea>
+                    <textarea id='description-input-edit' name='description' defaultValue={task.description} onChange={(e)=>handleEvent(e)}></textarea>
                 </div>
 
                 <div className={`${block}__edition--btns`}>

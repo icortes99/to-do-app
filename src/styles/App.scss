@@ -13,3 +13,11 @@
   background: $background-gradient;
   //background: linear-gradient(0deg, rgba(8,0,37,1) 0%, rgba(9,9,121,1) 20%, rgba(0,177,122,1) 100%);
 }
+
+@media screen and (max-width: $mobile-width) {
+  .app {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    min-height: auto;
+  }
+}

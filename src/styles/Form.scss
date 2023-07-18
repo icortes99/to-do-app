@@ -134,3 +134,46 @@
   width: 1.5rem;
   height: 1.5rem;
 }
+
+
+@media screen and (max-width: $mobile-width) {
+  .form {
+    width: 100%;
+    min-width: 320px;
+    max-width: 100%;
+    padding: 0;
+    border-radius: 0;
+
+    &__workspace {
+      padding: .7rem;
+
+      &__title {
+        height: 4.5rem;
+        padding-bottom: 1rem;
+      }
+    }
+
+    &__form {
+      &__inputs {
+        width: 79%;
+      }
+
+      &__buttons {
+        width: calc(21% - 1rem);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-left: 1rem;
+
+        &--add{
+          font-size: 0;
+          &::before {
+            content: "+";
+            font-size: 1.5rem;
+          }
+          width: 2.5rem;
+        }
+      }
+    }
+  }
+}
